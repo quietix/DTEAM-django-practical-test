@@ -18,6 +18,7 @@ handle common tasks in web development. Follow the instructions step by step. Go
   - [Task 8: OpenAI Basics](#task-8-openai-basics)
   - [Task 9: Deployment](#task-9-deployment)
 - [That's it!](#thats-it)
+- [Development Setup](#development-setup)
 
 
 ## Requirements:
@@ -151,3 +152,71 @@ make sure your `README.md` clearly explains how to install, run, and test everyt
 to reviewing your submission!
 
 Thank you!
+
+## Development Setup
+
+### Prerequisites
+
+1. Install pyenv (Python Version Management)
+   ```bash
+   # Linux/macOS
+   curl https://pyenv.run | bash
+   
+   # Add to your shell configuration (.bashrc, .zshrc, etc.):
+   export PYENV_ROOT="$HOME/.pyenv"
+   command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+   eval "$(pyenv init -)"
+   ```
+
+2. Install Poetry (Dependency Management)
+   ```bash
+   # Linux/macOS/Windows(WSL)
+   curl -sSL https://install.python-poetry.org | python3 -
+   ```
+
+### Project Setup
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/quietix/DTEAM-django-practical-test.git
+   cd DTEAM-django-practical-test
+   ```
+
+2. Install Python version using pyenv
+   ```bash
+   # Install Python version
+   pyenv install 3.11.5
+   
+   # Set local version for the project
+   pyenv local 3.11.5
+   ```
+
+3. Install dependencies
+   ```bash
+   poetry install   
+   ```
+
+4. Create environment variables file
+   ```bash
+   cp .env.example .env
+   # Edit .env file with your configuration
+   ```
+
+### Running the Project
+
+1. Apply database migrations
+   ```bash
+   poetry run python manage.py migrate
+   ```
+
+2. Load initial data (if available)
+   ```bash
+   poetry run python manage.py loaddata fixtures/initial_data.json
+   ```
+
+3. Run the development server
+   ```bash
+   poetry run python manage.py runserver
+   ```
+
+The application should now be running at http://localhost:8000/

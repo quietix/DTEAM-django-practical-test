@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "test-task-DTEAM"
+version = "0.1.0"
+description = "A Django-based CV management system"
+authors = ["Ivan Zashchyk <ivan.zashchyk@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api" 
