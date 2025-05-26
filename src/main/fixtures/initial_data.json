@@ -1,0 +1,26 @@
+[
+{
+  "model": "main.cv",
+  "pk": 1,
+  "fields": {
+    "firstname": "Ivan",
+    "lastname": "Zashchyk",
+    "skills": "Python, Django, DRF, React, Next.js, JS, TS, Celery",
+    "projects": "Proj1, Proj2, Proj3",
+    "bio": "Passionate Python Full-stack Developer",
+    "contacts": "email: ivan.zashchyk@gmail.com"
+  }
+},
+{
+  "model": "main.cv",
+  "pk": 2,
+  "fields": {
+    "firstname": "Dmytro",
+    "lastname": "SomeSurname",
+    "skills": "C#, WPF",
+    "projects": "",
+    "bio": "",
+    "contacts": "Linkedin: https://some-linkedin-link.com"
+  }
+}
+]
