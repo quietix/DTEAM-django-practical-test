@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     "rest_framework",
     # Local apps
     "main",
+    "audit",
 ]
 
 MIDDLEWARE = [
+    # Django middleware
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,6 +54,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Local middleware
+    "audit.middleware.RequestLogMiddleware",
 ]
 
 ROOT_URLCONF = "CVProject.urls"
