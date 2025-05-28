@@ -27,7 +27,12 @@
             <p class="card-text">{{ cv.contacts|linebreaks }}</p>
         </div>
 
-        <a href="{% url 'main:cv-list' %}" class="btn btn-primary">Back to List</a>
+        <form class="mb-3" method="post" action="{% url 'main:cv-download' cv.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Download CV</button>
+        </form>
+
+        <a href="{% url 'main:cv-list' %}" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
 {% endblock %}
