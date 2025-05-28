@@ -18,7 +18,12 @@ handle common tasks in web development. Follow the instructions step by step. Go
   - [Task 8: OpenAI Basics](#task-8-openai-basics)
   - [Task 9: Deployment](#task-9-deployment)
 - [That's it!](#thats-it)
-- [Development Setup](#development-setup)
+- [Solution Explanation](#solution-explanation)
+   - [Development Setup](#development-setup)
+      - [Prerequisites](#prerequisites)
+      - [Project Setup](#project-setup)
+      - [Running the Project](#running-the-project)
+      - [Running the tests](#running-the-tests)
 
 
 ## Requirements:
@@ -153,9 +158,11 @@ to reviewing your submission!
 
 Thank you!
 
-## Development Setup
+## Solution Explanation
 
-### Prerequisites
+### Development Setup
+
+#### Prerequisites
 
 1. Install pyenv (Python Version Management)
    ```bash
@@ -174,7 +181,7 @@ Thank you!
    curl -sSL https://install.python-poetry.org | python3 -
    ```
 
-### Project Setup
+#### Project Setup
 
 1. Clone the repository
    ```bash
@@ -202,7 +209,7 @@ Thank you!
    # Edit .env file with your configuration
    ```
 
-### Running the Project
+#### Running the Project
 
 1. Apply database migrations
    ```bash
@@ -220,3 +227,12 @@ Thank you!
    ```
 
 The application should now be running at http://localhost:8000/
+
+#### Running the tests
+
+For tests I'm using Pytest framework.
+To run them you should execute the following commands:
+```bash
+cd src
+pytest
+```
