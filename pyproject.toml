@@ -12,6 +12,8 @@ psycopg2-binary = "^2.9.10"
 pytest-django = "^4.11.1"
 xhtml2pdf = "^0.2.15"
 djangorestframework = "^3.16.0"
+python-dotenv = "^1.1.0"
+gunicorn = "^23.0.0"
 
 [build-system]
 requires = ["poetry-core"]
