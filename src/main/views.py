@@ -1,7 +1,11 @@
 from django.views.generic import ListView, DetailView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
+
+from rest_framework.viewsets import ModelViewSet
+
 from main.models import CV
+from main.serializers import CVSerializer
 from main.services import render_to_pdf
 
 
@@ -16,7 +20,7 @@ class CVDetailView(DetailView):
     model = CV
     template_name = "main/cv_detail.html"
     context_object_name = "cv"
-    
+
 
 def cv_to_pdf(request: HttpRequest, id: int):
     if request.method == "POST":
@@ -26,3 +30,8 @@ def cv_to_pdf(request: HttpRequest, id: int):
         response["Content-Disposition"] = "attachment; filename=cv.pdf"
         return response
     return HttpResponse("Failed to download CV.", code=400)
+
+
+class CVViewSet(ModelViewSet):
+    queryset = CV.objects.all()
+    serializer_class = CVSerializer
