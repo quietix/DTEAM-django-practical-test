@@ -1,0 +1,26 @@
+services:
+  django:
+    container_name: django-container
+    build: .
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+  db:
+    container_name: db-container
+    restart: always
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER_NAME}
+      POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
