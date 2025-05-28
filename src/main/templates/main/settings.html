@@ -1,0 +1,64 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Django Settings</h1>
+    
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Debug Information</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Debug Mode:</strong> {{ settings.DEBUG }}</p>
+            <p><strong>Debug Toolbar:</strong> {{ settings.DEBUG_TOOLBAR_ENABLED|default:"Not configured" }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Application Settings</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Secret Key Set:</strong> {% if settings.SECRET_KEY %}Yes{% else %}No{% endif %}</p>
+            <p><strong>Allowed Hosts:</strong> {{ settings.ALLOWED_HOSTS|join:", " }}</p>
+            <p><strong>Time Zone:</strong> {{ settings.TIME_ZONE }}</p>
+            <p><strong>Language Code:</strong> {{ settings.LANGUAGE_CODE }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Database Configuration</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Database Engine:</strong> {{ settings.DATABASES.default.ENGINE }}</p>
+            <p><strong>Database Name:</strong> {{ settings.DATABASES.default.NAME }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Static Files</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Static Root:</strong> {{ settings.STATIC_ROOT|default:"Not configured" }}</p>
+            <p><strong>Static URL:</strong> {{ settings.STATIC_URL }}</p>
+            <p><strong>Media Root:</strong> {{ settings.MEDIA_ROOT|default:"Not configured" }}</p>
+            <p><strong>Media URL:</strong> {{ settings.MEDIA_URL|default:"Not configured" }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Installed Apps</h2>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled mb-0">
+                {% for app in settings.INSTALLED_APPS %}
+                    <li>{{ app }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
