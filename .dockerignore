@@ -1,0 +1,7 @@
+.env
+.venv
+.git
+.gitignore
+.dockerignore
+.docker-compose.yml
+.docker-entrypoint.sh
