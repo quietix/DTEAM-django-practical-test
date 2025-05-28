@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
 
@@ -35,3 +35,7 @@ def cv_to_pdf(request: HttpRequest, id: int):
 class CVViewSet(ModelViewSet):
     queryset = CV.objects.all()
     serializer_class = CVSerializer
+
+
+class SettingsView(TemplateView):
+    template_name = 'main/settings.html'
