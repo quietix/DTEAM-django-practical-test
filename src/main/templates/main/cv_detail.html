@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ cv.firstname }} {{ cv.lastname }}'s CV{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title mb-4">{{ cv.firstname }} {{ cv.lastname }}</h1>
+        
+        <div class="mb-4">
+            <h3>Skills</h3>
+            <p class="card-text">{{ cv.skills|linebreaks }}</p>
+        </div>
+
+        <div class="mb-4">
+            <h3>Projects</h3>
+            <p class="card-text">{{ cv.projects|default:"No projects listed"|linebreaks }}</p>
+        </div>
+
+        <div class="mb-4">
+            <h3>Bio</h3>
+            <p class="card-text">{{ cv.bio|default:"No bio available"|linebreaks }}</p>
+        </div>
+
+        <div class="mb-4">
+            <h3>Contacts</h3>
+            <p class="card-text">{{ cv.contacts|linebreaks }}</p>
+        </div>
+
+        <a href="{% url 'main:cv-list' %}" class="btn btn-primary">Back to List</a>
+    </div>
+</div>
+{% endblock %}
