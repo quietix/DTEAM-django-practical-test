@@ -4,6 +4,7 @@ services:
     build: .
     depends_on:
       - db
+      - redis
     env_file:
       - .env
     ports:
@@ -21,6 +22,22 @@ services:
       POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
     ports:
       - "5432:5432"
+
+  redis:
+    container_name: redis-container
+    restart: always
+    image: redis:latest
+
+  celery:
+    container_name: celery-worker-container
+    build: .
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
+    working_dir: /app/src
+    command: ["celery", "-A", "CVProject", "worker", "--loglevel=info"]
 
 volumes:
   postgres_data:
