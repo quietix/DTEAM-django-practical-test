@@ -7,6 +7,36 @@
     <div class="card-body">
         <h1 class="card-title mb-4">{{ cv.firstname }} {{ cv.lastname }}</h1>
         
+        {% if translated_cv %}
+        <div class="alert alert-info mb-4">
+            <h4 class="alert-heading">Translated to {{ translated_cv.language }}</h4>
+            
+            <div class="mb-3">
+                <strong>Name:</strong> 
+                {{ translated_cv.translated.firstname }} {{ translated_cv.translated.lastname }}
+            </div>
+
+            <div class="mb-3">
+                <strong>Skills:</strong>
+                <p class="mb-1">{{ translated_cv.translated.skills|linebreaks }}</p>
+            </div>
+
+            <div class="mb-3">
+                <strong>Projects:</strong>
+                <p class="mb-1">{{ translated_cv.translated.projects|linebreaks }}</p>
+            </div>
+
+            <div class="mb-3">
+                <strong>Bio:</strong>
+                <p class="mb-1">{{ translated_cv.translated.bio|linebreaks }}</p>
+            </div>
+
+            <div class="mb-3">
+                <strong>Contacts:</strong>
+                <p class="mb-1">{{ translated_cv.translated.contacts|linebreaks }}</p>
+            </div>
+        </div>
+        {% else %}
         <div class="mb-4">
             <h3>Skills</h3>
             <p class="card-text">{{ cv.skills|linebreaks }}</p>
@@ -26,6 +56,7 @@
             <h3>Contacts</h3>
             <p class="card-text">{{ cv.contacts|linebreaks }}</p>
         </div>
+        {% endif %}
 
         <form class="mb-3" method="post" action="{% url 'main:cv-download' cv.id %}">
             {% csrf_token %}
@@ -41,6 +72,19 @@
         </form>
 
         <div id="emailMessage" class="alert d-none mb-3"></div>
+
+        <form class="mb-3" method="post" action="{% url 'main:translate-cv' cv.id %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <select name="lang" class="form-select" required>
+                    <option value="">Select Language</option>
+                    {% for value, name in languages %}
+                    <option value="{{ value }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-info">Translate CV</button>
+            </div>
+        </form>
 
         <a href="{% url 'main:cv-list' %}" class="btn btn-secondary">Back to List</a>
     </div>
