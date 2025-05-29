@@ -32,6 +32,16 @@
             <button type="submit" class="btn btn-primary">Download CV</button>
         </form>
 
+        <form class="mb-3" method="post" action="{% url 'main:send-cv-email' cv.id %}" id="emailForm">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="email" name="email" class="form-control" placeholder="Enter email address" required>
+                <button type="submit" class="btn btn-success">Send PDF to Email</button>
+            </div>
+        </form>
+
+        <div id="emailMessage" class="alert d-none mb-3"></div>
+
         <a href="{% url 'main:cv-list' %}" class="btn btn-secondary">Back to List</a>
     </div>
 </div>

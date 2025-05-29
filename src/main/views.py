@@ -1,12 +1,16 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.contrib import messages
 
 from rest_framework.viewsets import ModelViewSet
 
 from main.models import CV
 from main.serializers import CVSerializer
 from main.services import render_to_pdf
+from main.tasks import email_cv_to_user
 
 
 class CVListView(ListView):
@@ -38,4 +42,25 @@ class CVViewSet(ModelViewSet):
 
 
 class SettingsView(TemplateView):
-    template_name = 'main/settings.html'
+    template_name = "main/settings.html"
+
+
+def send_cv_email(request: HttpRequest, id: int):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        if not email:
+            messages.error(request, "Email is required")
+            return redirect("main:cv-detail", pk=id)
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Invalid email address")
+            return redirect("main:cv-detail", pk=id)
+
+        email_cv_to_user.delay(id, email)
+        messages.success(request, "Email is being sent")
+        return redirect("main:cv-detail", pk=id)
+
+    messages.error(request, "Method not allowed")
+    return redirect("main:cv-detail", pk=id)

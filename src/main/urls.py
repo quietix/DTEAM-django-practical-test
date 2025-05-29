@@ -5,6 +5,7 @@ from main.views import (
     cv_to_pdf,
     CVViewSet,
     SettingsView,
+    send_cv_email,
 )
 from rest_framework.routers import SimpleRouter
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path("", CVListView.as_view(), name="cv-list"),
     path("cv/<int:pk>/", CVDetailView.as_view(), name="cv-detail"),
     path("cv/download/<int:id>/", cv_to_pdf, name="cv-download"),
+    path("cv/email/<int:id>/", send_cv_email, name="send-cv-email"),
     path("settings/", SettingsView.as_view(), name="settings"),
 ]
 
