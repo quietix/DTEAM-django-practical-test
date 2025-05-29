@@ -116,6 +116,7 @@ ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
+
 # Email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
@@ -123,3 +124,47 @@ EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+# OpenAI settings
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+
+# Logging settings
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': '%(log_color)s%(asctime)s - %(levelname)s - %(name)s - %(message)s',
+            'log_colors': {
+                'DEBUG': 'cyan',
+                'INFO': 'green',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'bold_red',
+            },
+        },
+        'file': {
+            'format': '%(asctime)s - %(levelname)s - %(name)s - %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        logger_name: {
+            'level': 'WARNING',
+            'propagate': True,
+        } for logger_name in
+        ('django', 'django.request', 'django.db.backends', 'django.template', 'CVProject')
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['console'],
+    }
+}
