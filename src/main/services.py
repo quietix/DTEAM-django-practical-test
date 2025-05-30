@@ -12,7 +12,6 @@ from xhtml2pdf import pisa
 from xhtml2pdf.document import pisaContext
 
 from main.enums import Language
-from main.models import CV
 
 
 logger = logging.getLogger(__name__)
@@ -43,7 +42,11 @@ def translate_cv(cv: dict, lang: Language) -> Optional[dict]:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a helpful assistant that translates text from English to the specified language. Return only the translated text in JSON format without any additional notes or comments.",
+                    "content": (
+                        "You are a helpful assistant that translates text from English "
+                        "to the specified language. Return only the translated text in JSON "
+                        "format without any additional notes or comments."
+                    ),
                 },
                 {
                     "role": "user",
