@@ -1,6 +1,7 @@
 import io
 import logging
 import json
+from pathlib import Path
 from typing import Optional
 
 from django.template.loader import get_template
@@ -15,6 +16,16 @@ from main.enums import Language
 
 
 logger = logging.getLogger(__name__)
+
+
+def _load_prompt(filename: str) -> str:
+    prompt_path = Path("main/prompts") / filename
+    try:
+        with open(prompt_path, "r") as f:
+            return f.read().strip()
+    except Exception as e:
+        logger.error(f"Failed to load prompt file {filename}: {e}")
+        raise e
 
 
 def render_to_pdf(template_src, context) -> Optional[bytes]:
@@ -33,8 +44,7 @@ def render_to_pdf(template_src, context) -> Optional[bytes]:
     raise Exception("Failed to render PDF")
 
 
-def translate_cv(cv: dict, lang: Language) -> Optional[dict]:
-    logger.info(f"Translating CV to {lang.value}")
+def get_translated_text(cv: dict, lang: Language) -> dict:
     try:
         client = OpenAI(api_key=getattr(settings, "OPENAI_API_KEY"))
         response = client.chat.completions.create(
@@ -42,11 +52,7 @@ def translate_cv(cv: dict, lang: Language) -> Optional[dict]:
             messages=[
                 {
                     "role": "system",
-                    "content": (
-                        "You are a helpful assistant that translates text from English "
-                        "to the specified language. Return only the translated text in JSON "
-                        "format without any additional notes or comments."
-                    ),
+                    "content": _load_prompt("translation.txt"),
                 },
                 {
                     "role": "user",
@@ -62,11 +68,19 @@ def translate_cv(cv: dict, lang: Language) -> Optional[dict]:
             )
             raise Exception("Failed to get translated text")
 
+        return json.loads(translated_text)
+    except Exception as e:
+        logger.error(f"Translate CV Service Error: {e}")
+        raise e
+
+
+def translate_cv(cv: dict, lang: Language) -> Optional[dict]:
+    logger.info(f"Translating CV to {lang.value}")
+    try:
+        translated_text = get_translated_text(cv, lang)
         return {
-            "original": cv,
-            "translated": json.loads(translated_text),
-            "language": lang.name,
+            "translated": translated_text,
         }
     except Exception as e:
         logger.error(f"Translate CV Service Error: {e}")
-        return None
+        raise e

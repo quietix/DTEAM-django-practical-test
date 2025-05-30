@@ -6,5 +6,13 @@ from main.models import CV
 class CVSerializer(serializers.ModelSerializer):
     class Meta:
         model = CV
-        fields = "__all__"
+        fields = [
+            "id",
+            "firstname",
+            "lastname",
+            "skills",
+            "projects",
+            "bio",
+            "contacts",
+        ]
         read_only_fields = ["id"]
