@@ -119,7 +119,9 @@ class TestCVViewSet:
         assert data[1]["id"] == dummy_cvs[1].pk
 
     def test_viewset_detail_view(self, api_client: APIClient, dummy_cv: CV):
-        response: Response = api_client.get(reverse("main:cv-api-detail", kwargs={"pk": dummy_cv.pk}))
+        response: Response = api_client.get(
+            reverse("main:cv-api-detail", kwargs={"pk": dummy_cv.pk})
+        )
         data = response.json()
         assert response.status_code == 200
         assert data["id"] == dummy_cv.pk
@@ -127,7 +129,9 @@ class TestCVViewSet:
         assert data["lastname"] == dummy_cv.lastname
 
     def test_viewset_create_view(self, api_client: APIClient, create_data: dict):
-        response: Response = api_client.post(reverse("main:cv-api-list"), data=create_data)
+        response: Response = api_client.post(
+            reverse("main:cv-api-list"), data=create_data
+        )
         data = response.json()
         assert response.status_code == 201
         assert data["id"] is not None
@@ -138,7 +142,9 @@ class TestCVViewSet:
         assert data["bio"] == create_data["bio"]
         assert data["contacts"] == create_data["contacts"]
 
-    def test_viewset_update_view(self, api_client: APIClient, dummy_cv: CV, update_data: dict):
+    def test_viewset_update_view(
+        self, api_client: APIClient, dummy_cv: CV, update_data: dict
+    ):
         response: Response = api_client.put(
             reverse("main:cv-api-detail", kwargs={"pk": dummy_cv.pk}), data=update_data
         )

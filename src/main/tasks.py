@@ -7,6 +7,7 @@ from main.services import render_to_pdf
 
 logger = logging.getLogger(__name__)
 
+
 @shared_task
 def email_cv_to_user(cv_id: int, email: str):
     try:

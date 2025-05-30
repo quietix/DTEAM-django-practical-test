@@ -4,6 +4,7 @@ from django.db import transaction
 
 logger = logging.getLogger(__name__)
 
+
 class RequestLogMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -20,6 +21,6 @@ class RequestLogMiddleware:
                 )
         except Exception as e:
             logger.error(f"Failed to log request: {str(e)}")
-            
+
         response = self.get_response(request)
         return response
